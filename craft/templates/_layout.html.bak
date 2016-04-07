@@ -1,0 +1,454 @@
+{#
+ # Layout template
+ # ---------------
+ #
+ # This template defines your site’s global layout. It can be
+ # “extended” by other templates to fill in the gaps.
+ #
+ # See Twig’s Template Inheritance documentation for more details:
+ # http://twig.sensiolabs.org/doc/templates.html#template-inheritance
+ #}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="en-US">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+	
+	<meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/manifest.json">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+
+	<link rel="home" href="{{ siteUrl }}" />
+    <link rel="stylesheet" href="{{ siteUrl }}css/main.css">
+    <script src="{{ siteUrl }}js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="{{ siteUrl }}js/typekit.js"></script>
+</head>
+
+<body>
+	<!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    {% include 'partials/_icons' %}
+
+	<header class="header--global{% if (entry is defined and entry.sectionId == 1 and entry.headerBackgroundImage.first() ) %} header--bg" style="background-image:url({{ entry.headerBackgroundImage[0].getUrl('fullWidth') }});{% endif %}">
+
+		<div class="container">
+
+			<a class="logo logo--header" href="{{ siteUrl }}">
+				<h1 class="visuallyhidden">{{ siteName }}</h1>
+				<img src="{{ siteUrl }}img/konnexis-logo{% if ( entry is defined and entry.sectionId == 1 ) %}-white{% endif %}.png" alt="Konnexis Logo" />
+			</a>
+
+			{% set navEntries = craft.entries.section('pages').level(1) %}
+
+			<nav class="nav--global">
+				<ul class="nav__list">
+					{% for entry in navEntries %}
+					<li class="nav__item"><a class="nav__link{% if craft.request.firstSegment == entry.slug %} nav__link--active{% endif %}" href="{{ entry.url }}">{{ entry.title }}</a></li>
+					{% endfor %}
+					<li class="nav__item"><a class="nav__link" href="{{ contactInformation.helpDeskUrl }}">Help Desk</a></li>
+				</ul>
+			</nav>
+
+			<button class="nav-toggle">
+				<span class="nav-toggle__menu"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-menu"></use></svg><span class="visuallyhidden">Menu</span></span>
+				<span class="nav-toggle__close"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close"></use></svg><span class="visuallyhidden">Close</span></span>
+			</button>
+
+			{% if ( entry is defined and entry.sectionId == 1 ) %}
+
+			<div class="tagline">
+				<h2 class="tagline__main">{{ entry.tagline }}</h2>
+				<p class="tagline__sub">{{ entry.taglineSubtext }}</p>
+			</div>
+
+			{% endif %}
+
+
+		</div>
+	</header>
+
+	<main id="content" role="main">
+		{% block content %}
+			<p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
+			<p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
+		{% endblock %}
+	</main>
+
+	<footer class="footer--global">
+		<div class="container">
+
+			<ul class="grid">
+
+				<li class="grid__item tab-8-12">
+
+					<a class="logo logo--footer" href="{{ siteUrl }}">
+						<img src="{{ siteUrl }}img/konnexis-logo-white.png" alt="Konnexis Logo" />
+						<span class="visuallyhidden">Home</span>
+					</a>					
+
+					{% set navEntries = craft.entries.section('pages').level(2) %}
+
+					<nav class="nav--footer-products">
+						<h2 class="nav--footer-products__header">Products</h2>
+						<ul class="nav__list">
+							{% for entry in navEntries %}
+							<li class="nav__item"><a class="btn nav__link{% if craft.request.firstSegment == entry.slug %} nav__link--active{% endif %}" href="{{ entry.url }}">{{ entry.title }}</a></li>
+							{% endfor %}
+						</ul>
+					</nav>
+
+				</li><!--
+				--><li class="grid__item tab-4-12">
+
+					<h2>Subscribe</h2>
+
+					<p><strong>Sign up</strong> with your email address to <strong>recieve news and updates</strong></p>
+
+					<a data-modal-target="newsletter" class="btn modal-toggle modal-toggle--newsletter" href="#">Sign Up</a><span class="footer__privacy">We respect your privacy</span>
+
+					<a href="{{ contactInformation.twitterUrl }}" class="social__link"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-twitter"></use></svg><span class="visuallyhidden">Twitter</span></a>
+					<a href="{{ contactInformation.linkedinUrl }}" class="social__link"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-linkedin"></use></svg><span class="visuallyhidden">LinkedIn</span></a>
+
+
+				</li>
+			</ul>
+
+			<nav class="nav--secondary">
+				<ul class="nav__list">
+					<li class="nav__item"><a data-modal-target="contact" class="modal-toggle modal-toggle--contact nav__link" href="#">Contact Us</a></li>
+					{# <li class="nav__item"><a class="nav__link" href="{{ siteUrl }}blog/">Blog</a></li> #}
+					<li class="nav__item"><a class="nav__link" href="{{ siteUrl }}terms-and-conditions/">Terms &amp; Conditions</a></li>
+					<li class="nav__item"><a class="nav__link" href="{{ siteUrl }}careers/">Careers</a></li>
+				</ul>
+			</nav>
+
+			<div class="footer__contact">
+				<a href="mailto:{{ contactInformation.emailAddress }}">{{ contactInformation.emailAddress }}</a>
+				<span class="footer__phone">{{ contactInformation.phoneNumber }}</span>
+				<span class="footer__address">{{ contactInformation.address }}</span>
+			</div>
+
+			<span class="footer__copyright">Copyright &copy; {{ now.year }} {{ siteName }}</span>
+		</div>
+	</footer>
+
+	<div id="modal">
+
+		<button class="modal-toggle modal-toggle--close">
+			<svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close"></use></svg>
+		</button>
+
+		<div class="modal__content modal__content--newsletter">
+
+			<h2>Subscribe to our mailing list</h2>
+
+			<span class="form__instruction">* Mandatory field</span>
+
+			<!-- Begin MailChimp Signup Form -->
+			<div id="mc_embed_signup">
+			<form action="//konnexis.us11.list-manage.com/subscribe/post?u=3cc9a1424d7b3e5a7aeb8f57a&amp;id=60cc1394be" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+			    <div id="mc_embed_signup_scroll">
+			    {{ getCsrfInput() }}
+
+			<div class="mc-field-group form__field">
+			    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+			    <label for="mce-EMAIL">Email Address *</label>
+			</div>
+
+			<div class="mc-field-group form__field">
+			    <input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+			    <label for="mce-FNAME">First Name </label>
+			</div>
+
+			<div class="mc-field-group form__field">
+			    <input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+			    <label for="mce-LNAME">Last Name </label>
+			</div>
+
+			<div class="mc-field-group form__field">
+			    <input type="text" value="" name="MMERGE3" class="" id="mce-MMERGE3">
+			    <label for="mce-MMERGE3">Company </label>
+			</div>
+
+			<div id="mce-responses" class="clear">
+				<div class="response" id="mce-error-response" style="display:none"></div>
+				<div class="response" id="mce-success-response" style="display:none"></div>
+			</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+		    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_3cc9a1424d7b3e5a7aeb8f57a_60cc1394be" tabindex="-1" value=""></div>
+		    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+		    </div>
+			</form>
+			</div>
+
+			<!--End mc_embed_signup-->
+				
+			 
+
+		</div>
+
+		<div class="modal__content modal__content--contact">
+
+		  <div id="crmWebToEntityForm">
+
+		    <h2>Contact Us</h2>
+
+		    <p>Leave your information and we'll get back to you shortly.</p>
+
+		    <span class="form__instruction">* Mandatory field</span>
+
+		    <form id="contact-form" action='https://crm.zoho.com/crm/WebToLeadForm' name=WebToLeads1509952000000625001 method='POST' onSubmit='javascript:document.charset="UTF-8"; return checkMandatory()' accept-charset='UTF-8'>
+
+		      {{ getCsrfInput() }}
+
+		      <input type='text' style='display:none;' name='xnQsjsdp' value='2c44077505e4054b3ce219813c510337ac64b489b6254dff74eb4e32fb910282'/>
+		      <input type='hidden' name='zc_gad' id='zc_gad' value=''/>
+		      <input type='text' style='display:none;' name='xmIwtLD' value='176e2682a1371246621fd62db3b88ddb664118d1c88c51ab743eb08ccc3b338f'/>
+		      <input type='text' style='display:none;'  name='actionType' value='TGVhZHM='/>
+		      <input type='text' style='display:none;' name='returnURL' value='http&#x3a;&#x2f;&#x2f;www.konnexis.com&#x2f;' /> 
+
+		      <div class="form__field">
+		        <input id="fromFirstName" type='text' maxlength='40' name='First Name' />
+		        <label for="fromFirstName">First Name *</label>
+	        </div>
+
+	        <div class="form__field">
+		        <input id="fromLastName" type='text' maxlength='80' name='Last Name' />
+		        <label for="fromLastName">Last Name *</label>
+	        </div>   
+
+	        <div class="form__field">
+		        <input id="fromEmail" type="text" maxlength='100' name='Email'>
+		        <label for="fromEmail">Email Address *</label>
+	        </div>
+
+	        <div class="form__field">             
+		        <input id="company" type="text" maxlength='100' name='Company'>
+		        <label for="company">Company *</label>
+	        </div>
+
+	        <div class="form__field">             
+		        <input id="phone" type="text" maxlength='30' name='Phone'>
+		        <label for="phone">Phone Number</label>
+	        </div>   
+
+	        <div class="form__field form__field--select">             
+		        <select id="product" name='LEADCF16'>
+			        <option value='-None-'>-None-</option>
+			        <option value='AccuSOLO'>AccuSOLO</option>
+			        <option value='konnTRACK'>konnTRACK</option>
+			        <option value='Consulting&#x20;Services'>Consulting Services</option>
+			        <option value='Other'>Other</option>
+		        </select>
+		        <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-down"></use></svg>
+		        <label for="product">Product Interest</label>
+	        </div>
+
+		      <ul class="grid">
+		        <li class="grid__item tab-6-12">
+
+		        	<div class="form__field">             
+				        <input id="captcha" type="text" maxlength='80' name='enterdigest'>
+				        <label for="captcha">Captcha</label>
+				      </div>
+		                 
+		        </li><li class="grid__item tab-6-12">
+		        	
+		        	<div class="form__field">
+				        <img id='imgid' src='https://crm.zoho.com/crm/CaptchaServlet?formId=176e2682a1371246621fd62db3b88ddb664118d1c88c51ab743eb08ccc3b338f&grpid=2c44077505e4054b3ce219813c510337ac64b489b6254dff74eb4e32fb910282'>
+				        <a href='javascript:;' onclick='reloadImg()'>Reload</a>
+				      </div>
+
+		        </li>
+		      </ul>
+
+		      <input class="btn btn--outline" type="submit" value="Submit">
+
+		      <script>
+		        var mndFileds=new Array('Last Name');
+		        var fldLangVal=new Array('Last Name');
+		        var name='';
+		        var email='';
+
+		      /* Do not remove this code. */
+		        function reloadImg() {
+		        if(document.getElementById('imgid').src.indexOf('&d') !== -1 ) {
+		              document.getElementById('imgid').src=document.getElementById('imgid').src.substring(0,document.getElementById('imgid').src.indexOf('&d'))+'&d'+new Date().getTime();
+		        }  else {
+		              document.getElementById('imgid').src = document.getElementById('imgid').src+'&d'+new Date().getTime();
+		         } 
+		       }
+
+		        function checkMandatory() {
+		        for(i=0;i<mndFileds.length;i++) {
+		          var fieldObj=document.forms['WebToLeads1509952000000625001'][mndFileds[i]];
+		          if(fieldObj) {
+		          if (((fieldObj.value).replace(/^\s+|\s+$/g, '')).length==0) {
+		           if(fieldObj.type =='file')
+		            { 
+		             alert('Please select a file to upload'); 
+		             fieldObj.focus(); 
+		             return false;
+		            } 
+		          alert(fldLangVal[i] +' cannot be empty'); 
+		                  fieldObj.focus();
+		                  return false;
+		          }  else if(fieldObj.nodeName=='SELECT') {
+		                 if(fieldObj.options[fieldObj.selectedIndex].value=='-None-') {
+		            alert(fldLangVal[i] +' cannot be none'); 
+		            fieldObj.focus();
+		            return false;
+		             }
+		          } else if(fieldObj.type =='checkbox'){
+		           if(fieldObj.checked == false){
+		            alert('Please accept  '+fldLangVal[i]);
+		            fieldObj.focus();
+		            return false;
+		             } 
+		           } 
+		           try {
+		               if(fieldObj.name == 'Last Name') {
+		            name = fieldObj.value;
+		              }
+		          } catch (e) {}
+		            }
+		        }
+		           }
+		         
+		    </script>
+		    </form>
+
+		    <iframe name='captchaFrame' style='display:none;'></iframe>
+
+		  </div>
+
+		</div>
+
+		{# <div class="modal__content modal__content--contact">
+
+			<h2>Contact Us</h2>
+
+			<p>Leave your information and we'll get back to you shortly.</p>
+
+			<span class="form__instruction">* Mandatory field</span>
+			
+			{% macro errorList(errors) %}
+			    {% if errors %}
+			        <ul class="errors">
+			            {% for error in errors %}
+			                <li>{{ error }}</li>
+			            {% endfor %}
+			        </ul>
+			    {% endif %}
+			{% endmacro %}
+
+			{% from _self import errorList %}
+
+			<form id="contact-form" method="post" action="" accept-charset="UTF-8">
+			    {{ getCsrfInput() }}
+			    <input type="hidden" name="action" value="contactForm/sendMessage">
+
+			    <ul class="grid">
+			    	<li class="grid__item tab-6-12">
+						
+						<div class="form__field">
+						    <input id="fromName" required type="text" name="fromName" value="{% if message is defined %}{{ message.fromName }}{% endif %}">
+						    <label for="fromName">Name *</label>
+						</div>				    
+					    {{ message is defined and message ? errorList(message.getErrors('fromName')) }}
+
+					    <div class="form__field">
+					    	<input id="fromEmail"required  type="text" name="fromEmail" value="{% if message is defined %}{{ message.fromEmail }}{% endif %}">
+					    	<label for="fromEmail">Email Address *</label>
+					    </div>
+					    {{ message is defined and message ? errorList(message.getErrors('fromEmail')) }}
+
+					    <div class="form__field">
+					    	<input id="subject" required type="text" name="subject" value="{% if message is defined %}{{ message.subject }}{% endif %}">
+					    	<label for="subject">Subject *</label>
+					    </div>
+					    {{ message is defined and message ? errorList(message.getErrors('subject')) }}
+
+			    	</li><li class="grid__item tab-6-12">
+
+					    <div class="form__field">				    	
+					    	<input id="company" required type="text" name="message[Company]" value="{% if message is defined %}{{ message.company }}{% endif %}">
+					    	<label for="company">Company *</label>
+					    </div>
+					    {{ message is defined and message ? errorList(message.getErrors('company')) }}
+
+					    <div class="form__field">				    	
+					    	<input id="phone" type="text" name="message[Phone]" value="{% if message is defined %}{{ message.phone }}{% endif %}">
+					    	<label for="phone">Phone Number</label>
+					    </div>
+					    {{ message is defined and message ? errorList(message.getErrors('phone')) }}
+            #}
+						{# honeypot field #}
+						{#
+					    <input id="referral" name="referral" type="text">		    
+
+					    <div class="form__field">				    	
+					    	<select id="product" name="message[Product]">
+						    	<option name="none">&nbsp;</option>
+						    	<option name="accusolo">AccuSOLO</option>
+						    	<option name="konntrack">konnTrack</option>
+						    	<option name="consulting">Consulting Services</option>
+						    	<option name="other">Other</option>
+						    </select>
+						    <label for="product">Product</label>
+					   	</div>
+					    {{ message is defined and message ? errorList(message.getErrors('product')) }}
+
+					</li>
+				</ul>
+				
+				<div class="form__field">		    	
+			    	<textarea required rows="10" cols="40" id="message" name="message[body]">{% if message is defined %}{{ message.message }}{% endif %}</textarea>
+			    	<label for="message">Message *</label>
+			    </div>
+			    {{ message is defined and message ? errorList(message.getErrors('message')) }}
+
+			    <input class="btn btn--outline" type="submit" value="Send">
+
+			    <p class="thanks">Thank you. Your information has been received and we will respond shortly.</p>
+			</form>
+
+		</div>
+
+		#}
+
+	</div>
+	<div id="modal-overlay"></div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ siteUrl }}js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+    <script src="{{ siteUrl }}js/plugins.js"></script>
+    <script src="{{ siteUrl }}js/main.js"></script>  
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='https://www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+.icon {
+	width: 1.5rem;
+    height: 1.5rem;
+	display:inline-block;
+	fill:currentColor;
+}
+
+.icon--huge {
+	width:2.5rem;
+	height:2.5rem;
+	@include mq(tab) {
+		width:5rem;
+		height:5rem;
+	}
+	@include mq(lap) {
+		width:8rem;
+		height:8rem;
+	}	
+}
+
+.icon--encircled {
+	border:3px solid $brand-overlay;
+	border-radius:50%;
+}

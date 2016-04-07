@@ -1,0 +1,288 @@
+/* --------------------------------- *
+ * MIXINS.SCSS                       *
+ * --------------------------------- */
+/**
+ * Media query mixin.
+ * 
+ * Looks through the user defined map of media queries and outputs the content
+ * in the found query.
+ * 
+ * Can also take a custom query.
+ */
+@mixin mq($breakpoint) {
+  
+  $query: map-get($media-queries, $breakpoint);
+
+  // If no query was found, just output a custom query. An empty query means it
+  // was mapped empty (and used for grids), otherwise it's a mapped query.
+  @if ($query == null) {
+
+    @media #{$breakpoint} {
+      @content;
+    }
+
+  } @else if ($query == '') {
+
+    @content;
+
+  } @else {
+
+    @media #{$query} {
+      @content;
+    }
+
+  }
+
+}
+
+
+/**
+ * Transition mixin.
+ * 
+ * Looks through the user defined map of transitions and outputs the transition
+ * if it is found. Otherwise it will output a custom transition.
+ * 
+ * Properties can be specified to limit the transition to specific properties.
+ */
+@mixin transition($name, $properties: '') {
+
+  $transition: map-get($transitions, $name);
+
+  // If no transition was found, just output a custom transition.
+  @if ($transition) {
+
+    transition: #{$transition};
+
+  } @else {
+
+    transition: #{$name};
+
+  }
+
+  // If properties were specified, output them as the transition properties.
+  @if ($properties != '') {
+
+    transition-property: #{$properties};
+
+  }
+
+}
+
+
+
+/**
+ * Size mixin.
+ *
+ * Sets an element's width and height.
+ *
+ * Example:
+ * .element { @include size(160px, 50%); }
+ *
+ * Result:
+ * .element { width: 160px; height: 50%; }
+ */
+@mixin size($width, $height: $width) {
+
+  width: $width;
+  height: $height;
+
+}
+
+
+
+/**
+ * Position mixin.
+ *
+ * Shorthand for positioning elements.
+ *
+ * Example:
+ * .element {
+ *   @include absolute(top 0 left 0);
+ * }
+ *
+ * Result:
+ * .element {
+ *   position: absolute;
+ *   top: 0;
+ *   left: 0;
+ * }
+ */
+@mixin absolute($args) {
+
+  $i: 1;
+  $property: '';
+  $value: 0;
+
+  @each $pos in $args {
+
+    @if ($i % 2 == 1) {
+
+      $property: #{$pos};
+
+    } @else {
+
+      $value: nth($args, $i);
+      #{$property}: #{$value};
+
+    }
+
+    $i: $i + 1;
+
+  }
+
+}
+
+
+
+/**
+ * Arrow mixin.
+ *
+ * Creates a pure CSS arrow, can be positioned on every side of an object.
+ * TODO: position on corners.
+ */
+@mixin arrow($pos: 'top', $width: 1em, $color: '#fff') {
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    border: $width solid transparent;
+
+    @if ($pos == 'top') {
+
+      top: (-2 * $width);
+      left: 50%;
+      margin-left: (-1 * $width);
+      border-bottom-color: $color;
+
+    } @else if ($pos == 'top-right') {
+
+      top: 0;
+      right: (-2 * $width);
+      border-left-color: $color;
+      border-top-color: $color;
+
+    } @else if ($pos == 'right') {
+
+      top: 50%;
+      left: (-2 * $width);
+      margin-top: (-1 * $width);
+      border-left-color: $color;
+
+    } @else if ($pos == 'bottom') {
+
+      left: 50%;
+      bottom: (-2 * $width);
+      margin-left: (-1 * $width);
+      border-top-color: $color;
+
+    } @else {
+
+      top: 50%;
+      left: (-2 * $width);
+      margin-top: (-1 * $width);
+      border-right-color: $color;
+
+    }
+
+  }
+
+}
+
+
+// Clearfix
+@mixin clearfix() {
+    & {
+        *zoom: 1;
+    }
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+
+/**
+ * Hover/active/focus state mixin
+ * 
+ * Adds styles for interaction states
+ */
+@mixin interact($self: false) {
+    @if $self {
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+            @content;
+        }
+    } @else {
+        &:hover,
+        &:focus,
+        &:active {
+            @content;
+        }
+    }
+}
+
+/**
+ * Gradient mixin.
+ */
+@mixin gradient($bottom-left: $brand-dark, $top-right: $brand-overlay) {
+  background: $bottom-left; /* Old browsers */
+  background: -moz-linear-gradient(60deg,  $bottom-left 40%, $top-right 100%); /* FF3.6+ */
+  background: -webkit-linear-gradient(60deg,  $bottom-left 40%, $top-right 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(60deg,  $bottom-left 40%, $top-right 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(60deg,  $bottom-left 40%, $top-right 100%); /* IE10+ */
+  background: linear-gradient(30deg,  $bottom-left 40%, $top-right 100%); /* W3C */
+}
+
+/**
+ * Overlay mixin.
+ */
+@mixin gradient-overlay($bottom-left: $brand-dark, $top-right: $brand-overlay) {
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  position:relative;
+
+  &:after {
+    content: "";
+    display:block;
+    position:absolute;
+    top:0;right:0;left:0;bottom:0;
+    z-index:1;
+    @include gradient($bottom-left,$top-right);
+    opacity:0.8;
+  }
+
+  .container {
+    z-index:2;
+  }
+}
+
+
+
+
+/* --------------------------------- *
+ * TESTS                             *
+ * --------------------------------- */
+/**
+ * This mixin displays the current media query name and actual query, so that
+ * you can quickly see in which breakpoint you are.
+ */
+@mixin display-mq() {
+
+  @each $key, $val in $media-queries {
+
+    @if ($val != '') {}
+
+    @media #{$key} {
+      content: '#{$key}: #{$val}';
+    }
+  }
+
+}

@@ -1,0 +1,341 @@
+{#
+ # Page template
+ # -------------------
+ #
+ #}
+
+{% extends "_layout" %}
+
+{% block content %}
+
+	{% if ( entry is defined and entry.sectionId != 1 ) %}
+
+		{% if entry.type == 'product' %}
+
+			{% if ( entry.headerBackgroundImage.first() ) %}
+			<div class="header--product" style="background-image:url({{ entry.headerBackgroundImage[0].getUrl('fullWidth') }});">
+				<h1 class="visuallyhidden">{{ entry.title }}</h1>
+			</div>
+			{% endif %}
+
+			<div class="block block--blue block--unpadded">
+				<div class="container">
+					
+					{% set subnavEntries = craft.entries.type('product') %}
+
+					<nav class="nav--products">
+						<ul class="nav--products__list"><!--
+							{% for entry in subnavEntries %}
+							--><li class="nav--products__item"><a class="nav--products__link{% if craft.request.lastSegment == entry.slug %} nav--products__link--active{% endif %}" href="{{ entry.url }}">{{ entry.title }}</a></li><!--
+							{% endfor %}
+						--></ul>
+					</nav>
+
+				</div>
+			</div>
+
+		{% else %}
+
+			{% if ( entry.headerBackgroundImage.first() ) %}
+			<div class="header--bg" style="background-image:url({{ entry.headerBackgroundImage[0].getUrl('fullWidth') }});">
+				<div class="container">
+					<div class="tagline">	
+						<h1 class="tagline__main">{{ entry.title }}</h1>
+						<p class="tagline__sub">{{ entry.taglineSubtext }}</p>
+					</div>
+				</div>
+			</div>
+			{% else %}
+			<div class="block">
+				<div class="container">
+					<h1>{{ entry.title }}</h1>
+				</div>
+			</div>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+
+	{% for block in entry.pageLayout %}
+
+	    {% if block.type == "textWithPhoto" %}
+
+	       	<div class="text-photo block{% if (block.backgroundColor == "grey") %} block--light{% endif %}">
+
+	       		{% if block.photoAlignment == 'left' %}
+	       		<img class="text-photo__photo text-photo__photo--left" src="{{ block.photo.first().getUrl('fullWidth') }}" />
+	       		{% endif %}
+
+				<div class="container text-photo__content">
+			
+					<ul class="grid">
+						{% if block.photoAlignment == 'drop-left' or block.photoAlignment == 'drop-right'  %}
+						<li class="grid__item lap-6-12{% if block.photoAlignment == 'drop-right'  %} lap-push-6-12{% endif %}">
+							<img class="text-photo__photo text-photo__photo--inner" src="{{ block.photo.first().getUrl('fullWidth') }}" />
+						</li><!--
+						-->{% endif %}<li class="grid__item lap-5-12{% if block.photoAlignment == 'left' %} lap-push-7-12{% endif %}{% if block.photoAlignment == 'drop-right' %} lap-pull-7-12{% endif %}">
+
+							{% if block.sectionHeading is defined %}
+								<h2>{{ block.sectionHeading }}</h2>
+							{% endif %}
+
+							{{ block.textContent }}
+
+							{% if block.callToActionLink|length %}
+							<a class="btn btn--primary" href="{{ block.callToActionLink.first().url }}">{{ block.callToActionText }}</a>
+							{% endif %}
+
+						</li>
+					</ul>
+				</div>
+
+				{% if block.photoAlignment == 'right' %}
+	       		<img class="text-photo__photo text-photo__photo--right" src="{{ block.photo.first().getUrl('fullWidth') }}" />
+	       		{% endif %}
+
+			</div>
+
+	    {% elseif block.type == "testimonialSlider" %}
+
+	        <div class="block block--bg block--unpadded">
+
+				<div class="testimonial-slider">
+
+					{% if block.testimonials|length == 1 %}
+
+					<div class="container">
+
+						{% set testimonial = block.testimonials.first() %}
+
+						<blockquote>
+							<div class="quote__content">
+								{{ testimonial.body }}
+							</div>
+							<cite>{{ testimonial.title }}, {{ testimonial.jobTitle }}</cite>
+						</blockquote>
+
+					</div>
+
+					{% else %}
+
+					<ul class="testimonial-slider__list" data-slide-width="{{ 100 / block.testimonials|length }}" style="width:{{ 100 * block.testimonials|length }}%;"><!--
+
+						{% for testimonial in block.testimonials %}
+
+						--><li class="testimonial-slider__slide{% if loop.first %} active{% endif %}" data-slide-num="{{ loop.index}}" style="width:{{ 100 / block.testimonials|length }}%;">
+
+							<div class="container">
+
+								<blockquote>
+									<div class="quote__content">
+										{{ testimonial.body }}
+									</div>
+									<cite>{{ testimonial.title }}, {{ testimonial.jobTitle }}</cite>
+								</blockquote>
+
+							</div>
+
+						</li><!--
+
+						{% endfor %}
+
+					--></ul>
+
+					<button class="testimonial-slider__prev">&lsaquo;</button>
+					<button class="testimonial-slider__next">&rsaquo;</button>
+
+				{% endif %}
+
+				</div>
+
+			</div>
+
+		{% elseif block.type == "oneColumnText" %}
+
+			<div class="block{% if (block.backgroundColor == "grey") %} block--light{% endif %}{% if (block.centerText) %} block--center{% endif %}">
+
+				<div class="container">
+
+					{% if block.heading is defined %}
+
+						<h2>{{ block.heading }}</h2>
+
+					{% endif %}
+
+					{{ block.columnText }}
+
+				</div>
+
+			</div>
+
+	    {% elseif block.type == "twoColumnText" %}
+
+			<div class="block{% if (block.backgroundColor == "grey") %} block--light{% endif %}">
+
+				<div class="container">
+
+					{% if block.heading is defined %}
+
+						<h2>{{ block.heading }}</h2>
+
+					{% endif %}
+
+					<ul class="grid">
+						<li class="grid__item lap-6-12">
+
+							{{ block.leftColumnText }}
+
+						</li><!--
+						--><li class="grid__item lap-6-12">
+
+							{{ block.rightColumnText }}
+
+						</li>
+
+					</ul>
+
+				</div>
+
+			</div>
+
+		{% elseif block.type == "callToAction" %}
+
+			<div class="block block--center{% if (block.backgroundColor == "grey") %} block--light{% endif %}">
+
+				<div class="container">
+
+					<ul class="grid">
+						<li class="grid__item lap-6-12 push-4-12">
+
+							{% if block.contactCta is defined %}
+
+								<h2 class="cta-intro">For more information or to request a quote</h2>							
+								<a data-modal-target="contact" class="btn btn--primary modal-toggle modal-toggle--contact" href="#">Contact us</a>
+
+							{% else %}
+
+								<h2 class="cta-intro">{{ block.introHeading }}</h2>
+								
+								{% if block.ctaButtonLink|length %}
+								<a class="btn btn--primary" href="{{ block.ctaButtonLink.first().url }}">{{ block.ctaButtonText }}</a>
+								{% endif %}
+
+							{% endif %}
+							
+						</li>
+					</ul>
+
+				</div>
+
+			</div>
+
+		{% elseif block.type == "tabList" %}
+
+		{# get the matrix block index so that multiple tab lists on a single page won't have conflicts #}
+		{% set tabGroupId = loop.index %}
+
+		<div class="block block--center block--unpadded-bottom">
+
+			<div class="container">
+
+				<h2>{{ block.tabListTitle }}</h2>
+
+				<ul class="tab-list__list" role="tablist"><!--
+
+					{% for tab in block.tabs %}
+					--><li id="tab-{{ tabGroupId }}-{{ loop.index }}" aria-controls="panel-{{ tabGroupId }}-{{ loop.index }}" role="tab" tabindex="0" class="tab-list__tab">
+						<svg class="icon icon--huge icon--encircled"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-{{ tab.tabIcon }}"></use></svg>
+						<span class="tab-list__link-text">{{ tab.tabTitle }}</span>
+					</li><!--
+					{% endfor %}
+				--></ul>
+				
+			</div>
+
+		</div>
+
+		{% for tab in block.tabs %}
+		<div id="panel-{{ tabGroupId }}-{{ loop.index }}" aria-labelledby="tab-{{ tabGroupId }}-{{ loop.index }}" class="block block--blue block--center tab-list__panel" role="tabpanel" aria-hidden="true">
+			<div class="container">
+				<h2>{{ tab.tabTitle }}</h1>
+				<p>{{ tab.tabContent }}</p>
+			</div>
+		</div>
+		{% endfor %}
+
+		{% elseif block.type == "previewTiles" %}
+
+		<div class="block block--unpadded">
+			<ul class="grid grid--unpadded"><!--
+
+				{% for page in block.pages.limit(3) %}
+
+					{% if block.pages|length == 3 %}
+
+						{% set class = '4-12' %}
+
+					{% elseif block.pages|length == 2 %}
+
+						{% set class = '6-12' %}
+
+					{% else %}
+					
+						{% set class = '12-12' %}
+
+					{% endif %}
+
+				--><li class="grid__item lap-{{ class }}">
+
+					<a class="preview-tile{% if block.tileType == 'overlay' %} preview-tile--overlay{% else %} preview-tile--titlebar{% endif %}" href="{{ page.url }}" style="background-image:url({{ page.headerBackgroundImage[0].getUrl('fullWidth') }});">
+						<div class="preview-tile__overlay">
+							<span class="preview-tile__title">{{ page.title }}</span>
+							{% if block.tileType == 'overlay' %}<span class="preview-tile__desc">{{ page.taglineSubtext }}</span>{% endif %}
+						</div>						
+					</a>
+
+				</li><!--
+
+				{% endfor %}
+
+			--></ul>
+		</div>
+
+		{% elseif block.type == "featureList" %}
+
+		<div class="block block--blue-gradient">
+
+			<div class="container">
+
+				<ul class="grid">
+					<li class="grid__item lap-6-12">
+
+						{% if block.mainHeading is defined %}
+
+							<h2>{{ block.mainHeading }}</h2>
+
+						{% endif %}
+
+						<p>{{ block.mainContent }}</p>
+
+					</li>
+				</ul>
+
+				<div class="spacer"></div>
+
+				<ul class="grid"><!--
+					{% for feature in block.features %}
+					--><li class="grid__item tab-6-12 lap-3-12">
+						<h3 class="h6">{{ feature.featureHeading }}</h3>
+						{{ feature.featureContent }}
+					</li><!--					
+					{% endfor %}
+				--></ul>
+
+			</div>
+
+		</div>
+
+	    {% endif %}
+
+	{% endfor %}
+
+{% endblock %}

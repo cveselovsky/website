@@ -1,0 +1,158 @@
+.footer--global {
+	padding:7rem 0;
+	@include gradient();
+
+	h2, .h2,
+	h3, .h3,
+	h4, .h4,
+	h5, .h5,
+	h6, .h6,
+	p,
+	li { 
+		color: $white; 
+	}
+
+	h2 {
+		font-size:2.25rem;
+	}
+
+	.nav__list {
+		margin:0;
+
+		@include mq(tab) {
+			margin:1rem 0;
+		}
+	}
+
+	.nav__item {
+		width:100%;
+		margin-bottom:1rem;
+
+		@include mq(tab) {
+			width:auto;
+		}
+	}
+
+	.nav__link {
+		width:100%;
+		font-size:0.875rem;
+		color:$white;
+		margin-left:0;
+		margin-right:0.5rem;
+		border:none;
+		@include transition(normal,color);
+
+		@include interact {
+			color:$logo;
+		}
+	}
+
+	.btn {
+		width:100%;
+		color:$white;
+		border:1px solid $white;
+		padding:0.5rem 1.5rem;
+		@include transition(normal,'color,border');
+
+		@include interact {
+			color:$logo;
+			border:1px solid $logo;
+		}
+
+		@include mq(tab) {
+			width:auto;
+		}
+	}
+}
+
+.nav--footer-products {
+	margin-bottom:0.5rem;
+
+	@include mq(tab) {
+		margin-bottom: 3.5rem;
+	}
+}
+
+.nav--secondary {
+	.nav__item {
+		margin-right:1.25rem;
+	}
+}
+
+.footer__contact {
+
+	span, a {
+		font-size:0.825rem;
+		color:$white;
+		line-height:1.5;
+		display:block;
+
+		@include mq(lap) {
+			display:inline-block;
+			margin-right:1rem;
+		}
+	}
+
+	a {
+		@include transition(normal,color);		
+		@include interact {
+			color:$logo;
+		}
+	}
+}
+
+.footer__privacy {
+	display:block;
+	width:100%;
+	text-align:left;
+	font-size:0.825rem;
+	padding: 1.5rem 0 3rem;
+
+	@include mq(lap) {
+		display:inline-block;
+		width:auto;
+		padding:0 1.5rem;
+		text-align:center;
+	}
+}
+
+.footer__copyright {
+	color:$white;
+	display:block;
+	font-size:0.825rem;
+	margin-top:3.5rem;
+}
+
+.logo--footer {
+	display:block;
+	margin-bottom:2rem;
+
+	@include mq(tab) {
+		margin-bottom:3.75rem;
+	}
+
+	img {
+		max-width:150px;
+		height:auto;
+	}
+}
+
+.social__link {
+	color:$white;
+    display: inline-block;
+    margin-bottom:2rem;
+    margin-right: 0.75rem;
+	.icon {
+		width:2rem;
+		height:2rem;
+	}
+
+	@include mq(lap) {
+		margin-top:2rem;
+	}
+}
+
+h2.nav--footer-products__header {
+	font-size:0.875rem;
+	margin-bottom:1rem;
+}

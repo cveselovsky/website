@@ -1,0 +1,64 @@
+/* --------------------------------- *
+ * VARIABLES                         *
+ * --------------------------------- */
+
+//----------------------------------------------------------------------COLORS
+$brand: #2e78ab;
+$text: #17252d;
+$modal: #4285b3;
+$logo: #00aeef;
+$logo-alt: #65b561;
+$white: #fff;
+$red: #e31837;
+$ui: #f5f5f5;
+
+$text-on-dark: #47a5e9;
+$label: #4c5f70;
+
+$brand-dark: #10344e;
+$brand-overlay: #266896;
+
+$light-overlay-light: #2677b0;
+$light-overlay-dark: #13476b;
+
+
+//----------------------------------------------------------------------GLOBALS
+$padding: 1.5rem;
+$font-size: 16px;
+
+$media-queries: (
+  pocket: 'screen',
+  tab: 'screen and (min-width: 33.75em)',
+  lap:  'screen and (min-width: 60em)',
+  desk: 'screen and (min-width: 80em)'
+);
+
+$transitions: (
+  slow:   'all 0.3s ease-in-out',
+  normal: 'all 0.2s ease-in-out',
+  fast:   'all 0.1s ease-in-out'
+);
+
+
+/* --------------------------------- *
+ * PARTIALS                          *
+ * --------------------------------- */
+@import 'includes/mixins';
+@import 'includes/normalize';
+@import 'includes/boilerplate';
+
+@import 'base/typography';
+@import 'base/layout';
+@import 'base/grid';
+@import 'base/button';
+@import 'base/icon';
+
+@import 'global/header';
+@import 'global/footer';
+@import 'global/modal';
+
+@import 'modules/blog';
+@import 'modules/products';
+@import 'modules/tabpanels';
+
+@import 'includes/print';

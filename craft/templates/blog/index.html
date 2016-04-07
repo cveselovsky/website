@@ -1,0 +1,63 @@
+{#
+ # Blog index template
+ # -------------------
+ #
+ #}
+
+{% extends "_layout" %}
+{% set title = "Blog" %}
+
+{% block content %}
+<section class="blog">
+	<div class="block">
+		<div class="container container--padded">
+			<h1 class="blog__heading">{{ siteName }} Blog</h1>
+
+			{% paginate craft.entries.section('blog').limit(4) as blogEntries %}
+
+			<ul class="grid"><!--
+			{% for entry in blogEntries  %}
+			--><li class="grid__item tab-6-12">
+
+				<article>
+					<a class="blog__permalink" href="{{ entry.url }}">
+						{% if entry.blogPostImage.first() %}
+						<img class="blog__thumb" src="{{ entry.blogPostImage.first().getUrl('blogThumb') }}" />
+						{% endif %}
+						<h2 class="blog__heading">{{ entry.title }}</h2>
+					</a>
+					<p>Posted on {{ entry.postDate.format('F d, Y') }}</p>
+					{{ entry.body.getPage(1) }}
+				</article>
+
+			</li><!--
+			{% endfor %}
+			--></ul>
+
+			<div class="pagination">
+				<ul>
+					{% if paginate.prevUrl %}
+					<li class="pagination__item"><a href="{{ paginate.prevUrl }}" class="btn pagination__prev">Previous</a></li>
+					{% endif %}
+
+					{% for page, url in paginate.getPrevUrls(3) %}
+					<li class="pagination__item"><a href="{{ url }}" class="btn pagination__prev">{{ page }}</a></li>
+					{% endfor %}
+
+					<li class="pagination__item pagination__item--current">{{ paginate.currentPage }}</li>
+
+					{% for page, url in paginate.getNextUrls(3) %}
+					<li class="pagination__item"><a href="{{ url }}" class="btn pagination__next">{{ page }}</a></li>
+					{% endfor %}
+
+					{% if paginate.nextUrl %}
+					<li class="pagination__item"><a href="{{ paginate.nextUrl }}" class="btn pagination__next">Next</a></li>
+					{% endif %}
+				</ul>
+			</div>
+
+			{% endpaginate %}
+		</div>
+	</div>
+</section>
+{% endblock %}
