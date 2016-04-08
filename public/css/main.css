@@ -261,7 +261,7 @@ body {
     font-family: "Proxima Nova", "proxima-nova", "Open Sans", "Gill Sans MT", "Gill Sans", Corbel, Arial, sans-serif;
     font-size: 1em;
     font-weight: 400;
-    line-height: 3;
+    line-height: 3/*1.5*/;
 }
 h1,
 .h1,
@@ -456,7 +456,7 @@ select:valid+label {
 a {
     color: #2e78ab;
     font-weight: bold;
-    text-decoration: none
+    text-decoration: none;
 }
 a:hover,
 a:focus,
@@ -1413,14 +1413,14 @@ body {
     z-index: 10
 }
 .header--global .nav__link {
-    font-weight: normal
+    font-weight: normal/*bold*/
 }
 .logo--header {
     display: inline-block;
     margin-top: 1.5rem
 }
 .logo--header img {
-    max-width: 250px;
+    max-width: 250px/*150px*/;
     height: auto
 }
 .nav--global {
@@ -1486,7 +1486,7 @@ body {
     .nav--global.open .nav__link {
         color: #2e78ab;
         text-align: left;
-        font-size: 1rem;
+        font-size: 1rem/*0.75rem*/;
         margin-top: 0;
         margin-bottom: 0;
         margin-left: 0.5rem
@@ -1600,7 +1600,7 @@ body {
 }
 @media screen and (min-width: 60em) {
     .tagline {
-        padding: 6rem 0
+        padding: 6rem/*12rem*/ 0
     }
 }
 .tagline__main {
@@ -1619,7 +1619,7 @@ body {
 @media screen and (min-width: 60em) {
     .tagline__main {
         line-height: 1;
-        font-size: 2.5rem
+        font-size: 2.5rem/*3.5rem*/
     }
 }
 .tagline__sub {
@@ -1961,7 +1961,7 @@ article .blog__heading a:active {
     display: block;
     color: #fff;
     text-align: center;
-    font-weight: 400;
+    font-weight: 400/*900*/;
     font-size: 1.625rem
 }
 .preview-tile--titlebar:hover .preview-tile__overlay,
