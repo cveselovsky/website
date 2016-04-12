@@ -61,8 +61,14 @@
 
 	       	<div class="text-photo block{% if (block.backgroundColor == "grey") %} block--light{% endif %}">
 
+	       		{% if block.photoSizing == 'original' %}
+					{% set photoUrl = block.photo.first().getUrl() %}
+				{% else %}
+					{% set photoUrl = block.photo.first().getUrl('fullWidth') %}
+	       		{% endif %}
+
 	       		{% if block.photoAlignment == 'left' %}
-	       		<img class="text-photo__photo text-photo__photo--left" src="{{ block.photo.first().getUrl('fullWidth') }}" />
+	       		<img class="text-photo__photo text-photo__photo--left" src="{{ photoUrl }}" />
 	       		{% endif %}
 
 				<div class="container text-photo__content">
@@ -70,7 +76,7 @@
 					<ul class="grid">
 						{% if block.photoAlignment == 'drop-left' or block.photoAlignment == 'drop-right'  %}
 						<li class="grid__item lap-6-12{% if block.photoAlignment == 'drop-right'  %} lap-push-6-12{% endif %}">
-							<img class="text-photo__photo text-photo__photo--inner" src="{{ block.photo.first().getUrl('fullWidth') }}" />
+							<img class="text-photo__photo text-photo__photo--inner" src="{{ photoUrl }}" />
 						</li><!--
 						-->{% endif %}<li class="grid__item lap-5-12{% if block.photoAlignment == 'left' %} lap-push-7-12{% endif %}{% if block.photoAlignment == 'drop-right' %} lap-pull-7-12{% endif %}">
 
@@ -89,7 +95,7 @@
 				</div>
 
 				{% if block.photoAlignment == 'right' %}
-	       		<img class="text-photo__photo text-photo__photo--right" src="{{ block.photo.first().getUrl('fullWidth') }}" />
+	       		<img class="text-photo__photo text-photo__photo--right" src="{{ photoUrl }}" />
 	       		{% endif %}
 
 			</div>

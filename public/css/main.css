@@ -454,7 +454,7 @@ select:valid+label {
     height: 1rem
 }
 a {
-    color: #2e78ab;
+    color: #2e78ab; 
     font-weight: bold;
     text-decoration: none;
 }
@@ -463,6 +463,8 @@ a:focus,
 a:active {
     text-decoration: none
 }
+a:h2 {color: #fff !important;}
+	
 img {
     max-width: 100%;
     height: auto
@@ -525,7 +527,7 @@ body {
 }
 .container--full-mob {
     padding: 0
-}
+}a
 @media screen and (min-width: 33.75em) {
     .container--full-mob {
         padding: 0 1rem
@@ -632,6 +634,9 @@ body {
 .block--bg p,
 .block--bg li {
     color: #fff
+}
+.a {
+    color: #fff;
 }
 .spacer {
     display: block;
@@ -1486,7 +1491,7 @@ body {
     .nav--global.open .nav__link {
         color: #2e78ab;
         text-align: left;
-        font-size: 1rem/*0.75rem*/;
+        font-size: 0.9rem/*0.75rem*/;
         margin-top: 0;
         margin-bottom: 0;
         margin-left: 0.5rem
@@ -1600,7 +1605,7 @@ body {
 }
 @media screen and (min-width: 60em) {
     .tagline {
-        padding: 6rem/*12rem*/ 0
+        padding: 3rem/*12rem*/ 0
     }
 }
 .tagline__main {
