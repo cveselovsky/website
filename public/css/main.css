@@ -544,7 +544,7 @@ body {
 }
 @media screen and (min-width: 33.75em) {
     .block {
-        padding: 7rem 0
+        padding: /*7rem*/ 2rem 0
     }
 }
 .block--unpadded {
@@ -1491,10 +1491,10 @@ body {
     .nav--global.open .nav__link {
         color: #2e78ab;
         text-align: left;
-        font-size: 0.9rem/*0.75rem*/;
+        font-size: .85rem/*0.75rem*/;
         margin-top: 0;
         margin-bottom: 0;
-        margin-left: 0.5rem
+        margin-left: /*0.5rem*/ 0.1rem
     }
 }
 .nav-toggle {
@@ -1574,7 +1574,7 @@ body {
     background: #10344e;
     background: -webkit-linear-gradient(60deg, #10344e 40%, #266896 100%);
     background: linear-gradient(30deg, #10344e 40%, #266896 100%);
-    opacity: 0.8
+    opacity: /*0.8*/ 0.5
 }
 .header--bg .container {
     z-index: 2
@@ -1605,7 +1605,7 @@ body {
 }
 @media screen and (min-width: 60em) {
     .tagline {
-        padding: 3rem/*12rem*/ 0
+        padding: 6rem/*12rem*/ 0
     }
 }
 .tagline__main {
@@ -2093,7 +2093,7 @@ article .blog__heading a:active {
 @media screen and (min-width: 33.75em) {
     .tab-list__tab {
         width: 25%;
-        padding: 4rem 0 6rem
+        padding: /*4rem*/ 2rem 0 2rem/*6rem*/
     }
 }
 @media screen and (min-width: 33.75em) {
