@@ -4,7 +4,7 @@
 	z-index:10;
 
 	.nav__link {
-		font-weight:bold;
+		font-weight:normal; // ORIGINAL: bold;
 	}
 }
 
@@ -13,7 +13,7 @@
     margin-top: 1.5rem;
 
     img {
-    	max-width:150px;
+    	max-width:250px; // ORIGINAL: 150px;
 		height:auto;
     }
 }
@@ -81,10 +81,10 @@
 			.nav__link {
 				color:$brand;
 				text-align:left;
-				font-size: 0.75rem;
+				font-size: 0.85rem; // ORIGINAL: 0.75rem;
 				margin-top:0;
 				margin-bottom:0;
-				margin-left:0.5rem;
+				margin-left:0.1rem; // ORIGINAL: 0.5rem;
 			}
 		}
 	}
@@ -177,6 +177,8 @@
 	max-width:60rem;
 	padding:6rem 0;
 
+	/* ORIGINAL: 
+
 	@include mq(tab) {
 		padding:9rem 0;
 	}
@@ -184,6 +186,7 @@
 	@include mq(lap) {
 		padding:12rem 0;
 	}
+	*/
 }
 
 .tagline__main {
@@ -200,7 +203,7 @@
 
 	@include mq(lap) {
 		line-height:1;
-		font-size:3.5rem;
+		font-size:2.5rem;// ORIGINAL: 3.5rem;
 	}
 }
 
