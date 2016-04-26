@@ -73,8 +73,6 @@
 		   	$currentSlide.removeClass('tagline__sub--active');
 		   	$nextSlide.addClass('tagline__sub--active');
 		   	setTimeout(draw, 6000);
-
-		   	
 		}
 		setTimeout(draw, 6000);
 	}
