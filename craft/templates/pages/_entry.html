@@ -57,7 +57,11 @@
 
 	{% for block in entry.pageLayout %}
 
-	    {% if block.type == "textWithPhoto" %}
+		{% if block.type == "anchor" %}
+
+			<a name="{{ block.anchorName }}"></a>
+
+	    {% elseif block.type == "textWithPhoto" %}
 
 	       	<div class="text-photo block{% if (block.backgroundColor == "grey") %} block--light{% endif %}">
 

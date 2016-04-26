@@ -59,8 +59,13 @@
 
 			<nav class="nav--global">
 				<ul class="nav__list">
-					{% for entry in navEntries %}
-					<li class="nav__item"><a class="nav__link{% if craft.request.firstSegment == entry.slug %} nav__link--active{% endif %}" href="{{ entry.url }}">{{ entry.title }}</a></li>
+					{% for navEntry in navEntries %}
+						{# homepage is jumplinks only #}
+						{% if ( entry is defined and entry.sectionId == 1 ) %}
+							<li class="nav__item"><a class="nav__link" href="#{{ navEntry.slug }}">{{ navEntry.title }}</a></li>
+						{% else %}
+							<li class="nav__item"><a class="nav__link{% if craft.request.firstSegment == navEntry.slug %} nav__link--active{% endif %}" href="{{ navEntry.url }}">{{ navEntry.title }}</a></li>
+						{% endif %}
 					{% endfor %}
 					<li class="nav__item"><a class="nav__link" href="{{ contactInformation.helpDeskUrl }}">Help Desk</a></li>
 				</ul>
