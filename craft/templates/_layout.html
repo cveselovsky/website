@@ -80,7 +80,13 @@
 
 			<div class="tagline">
 				<h2 class="tagline__main">{{ entry.tagline }}</h2>
-				<p class="tagline__sub">{{ entry.taglineSubtext }}</p>
+				{% if entry.rotatingTaglineSubtext|length > 1 %}
+					{% for tagline in entry.rotatingTaglineSubtext %}
+						<p class="tagline__sub tagline__sub--multi{% if loop.first %} tagline__sub--active{% endif %}">{{ tagline.tagline }}</p>
+					{% endfor %}
+				{% else %}
+					<p class="tagline__sub">{{ entry.rotatingTaglineSubtext[0]['tagline'] }}</p>
+				{% endif %}
 			</div>
 
 			{% endif %}

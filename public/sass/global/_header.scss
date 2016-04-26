@@ -176,6 +176,7 @@
 	margin:0 auto;
 	max-width:60rem;
 	padding:6rem 0;
+	position:relative;
 
 	/* ORIGINAL: 
 
@@ -194,7 +195,7 @@
 	margin-bottom:3.5rem;
 	font-weight:300;
 	font-size: 1.125rem;
-	line-height:1.625;
+	line-height:1.625;	
 
 	@include mq(tab) {
 		line-height:1.25;
@@ -218,5 +219,17 @@
 	@include mq(tab) {
 		font-size:1.125rem;
 		padding: 0 10%;
+	}
+}
+
+p.tagline__sub--multi {
+	text-align:center;
+	opacity:0;
+	width:100%;
+	position:absolute;
+	@include transition(normal,opacity);
+
+	&.tagline__sub--active {
+		opacity:1;
 	}
 }

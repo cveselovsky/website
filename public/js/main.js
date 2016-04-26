@@ -61,6 +61,24 @@
 		});
 	});
 
+	// --------------------------------------------------------------------------[ TAGLINE SLIDER ]
+	if ($('.tagline__sub--multi').length ) {
+
+		var $currentSlide = null,
+			$nextSlide = null;
+
+		function draw() {
+		    $currentSlide = $('.tagline__sub--active');
+		    $nextSlide = $currentSlide.next('.tagline__sub--multi').length ? $currentSlide.next('.tagline__sub--multi') : $('.tagline__sub--multi').first();
+		   	$currentSlide.removeClass('tagline__sub--active');
+		   	$nextSlide.addClass('tagline__sub--active');
+		   	setTimeout(draw, 6000);
+
+		   	
+		}
+		setTimeout(draw, 6000);
+	}
+
 	// --------------------------------------------------------------------------[ SMOOTH SCROLL TO NAMED ANCHORS ]
 	$('a[href*="#"]:not([href="#"])').click(function() {
 		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
