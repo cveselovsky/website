@@ -278,6 +278,19 @@ img {
   height:auto;
 }
 
+.block--blue-gradient, .tab-list__panel {
+  a {
+    color:#FFF;
+    border-bottom:2px solid $logo;
+    display:inline-block;
+    @include transition(normal,color);
+
+    @include interact {
+      color:$logo;
+    }
+  }
+}
+
 /**
  * Prevent FOUT on non-mobile screens.
  */

@@ -29,7 +29,7 @@
 
 	@include mq(tab) {
 		width:25%;
-		padding: 2rem 0;// ORIGINAL: 4rem 0 6rem;
+		padding: 2rem 0 4rem;// ORIGINAL: 4rem 0 6rem;
 	}
 }
 
@@ -49,6 +49,20 @@
 			left: 50%;
 			margin-left: -2rem;
 		}
+	}
+}
+
+.tab-list__tab--no-icon {
+	.tab-list__link-text {
+		border:3px solid $brand-overlay;
+		padding: 2rem;
+    	width: 90%;
+    	margin: auto;
+    	@include transition(normal,background-color);
+	}
+
+	@include interact {
+		.tab-list__link-text { background-color:transparentize($logo,0.75); }
 	}
 }
 

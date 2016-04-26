@@ -252,8 +252,10 @@
 				<ul class="tab-list__list" role="tablist"><!--
 
 					{% for tab in block.tabs %}
-					--><li id="tab-{{ tabGroupId }}-{{ loop.index }}" aria-controls="panel-{{ tabGroupId }}-{{ loop.index }}" role="tab" tabindex="0" class="tab-list__tab">
+					--><li id="tab-{{ tabGroupId }}-{{ loop.index }}" aria-controls="panel-{{ tabGroupId }}-{{ loop.index }}" role="tab" tabindex="0" class="tab-list__tab{% if tab.tabIcon == "noIcon" %} tab-list__tab--no-icon{% endif %}">
+						{% if tab.tabIcon != "noIcon" %}
 						<svg class="icon icon--huge icon--encircled"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-{{ tab.tabIcon }}"></use></svg>
+						{% endif %}
 						<span class="tab-list__link-text">{{ tab.tabTitle }}</span>
 					</li><!--
 					{% endfor %}
